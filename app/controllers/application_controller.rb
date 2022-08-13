@@ -16,4 +16,24 @@ class ApplicationController < Sinatra::Base
     users.to_json(include: :messages)
   end
 
+  get "/users/:id" do
+    users = User.find(params[:id])
+    users.to_json
+  end
+
+  patch "/message/:id" do
+    message = Message.find(params[:id])
+    message.update(
+      title: params[:title],
+      comment: params[:comment]
+    )
+    message.to_json
+  end
+
+  delete "/users/:id" do
+    users = User.find(params[:id])
+    users.destroy
+    users.to_json
+  end
+
 end
