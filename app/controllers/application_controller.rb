@@ -38,11 +38,19 @@ class ApplicationController < Sinatra::Base
 
   post "/message" do
     message = Message.create(
+      user_id: params[:user_id],
       title: params[:title],
       comment: params[:comment],
-      user_id: params[:user_id]
     )
     message.to_json
   end
+
+  delete "/message/:id" do
+      message = Message.find(params[:id])
+      message.destroy
+      message.to_json
+   end
+
+
 
 end
