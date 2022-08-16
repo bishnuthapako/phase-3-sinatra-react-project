@@ -35,10 +35,18 @@ class ApplicationController < Sinatra::Base
     users.destroy
     users.to_json
   end
+  
+  post "/users" do
+      user = User.create(
+      username = params[:username]
+    )
+  end
 
   post "/message" do
+    # binding.pry
+    user = User.find_or_create_by(username: params[:username])
     message = Message.create(
-      user_id: params[:user_id],
+      user_id: user.id,
       title: params[:title],
       comment: params[:comment],
     )
