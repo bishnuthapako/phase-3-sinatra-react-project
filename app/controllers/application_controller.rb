@@ -8,6 +8,11 @@ class ApplicationController < Sinatra::Base
     # { message: "Good luck with your project!" }.to_json
   end
 
+  get "/message" do
+    messages = Message.all
+    messages.to_json
+  end
+
   get "/users" do
     users = []
     5.times do 
@@ -43,12 +48,11 @@ class ApplicationController < Sinatra::Base
   end
 
   post "/message" do
-    # binding.pry
     user = User.find_or_create_by(username: params[:username])
     message = Message.create(
-      user_id: user.id,
-      title: params[:title],
-      comment: params[:comment],
+    user_id: user.id,
+    title: params[:title],
+    comment: params[:comment],
     )
     message.to_json
   end
